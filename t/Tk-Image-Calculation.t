@@ -19,6 +19,9 @@ BEGIN { use_ok('Tk::Image::Calculation') };
  my @results;
  ok(($results[0], $results[1], $results[2], $results[3]) = $cal->GetPointsOval(10, 20, 50, 80));
  ok(($results[4], $results[5], $results[6], $results[7]) = $cal->GetPointsOval(10, 20, 50, 80));
+
+ #CheckResults($results[0], $results[4]);
+
  ok(ComparePoints($results[0], $results[4]));
  ok(ComparePoints($results[1], $results[5]));
  ok(CompareLines($results[2], $results[6]));
@@ -77,8 +80,8 @@ BEGIN { use_ok('Tk::Image::Calculation') };
  	{
  	 for(my $i = 0; $i <= $#{$_[0]}; $i++)
  		{
- 		cmp_ok($_[0][$i]->[0], '==', $_[1][$i]->[0], "should equal");
- 		cmp_ok($_[0][$i]->[1], '==', $_[1][$i]->[1], "should equal");
+ 		cmp_ok($_[0][$i][0], '==', $_[1][$i][0], "should equal");
+ 		cmp_ok($_[0][$i][1], '==', $_[1][$i][1], "should equal");
  		}
  	return(1);
  	}
@@ -87,12 +90,21 @@ BEGIN { use_ok('Tk::Image::Calculation') };
  	{
  	 for(my $i = 0; $i <= $#{$_[0]}; $i++)
  		{
- 		cmp_ok($_[0][$i]->[0], '==', $_[1][$i]->[0], "should equal");
- 		cmp_ok($_[0][$i]->[1], '==', $_[1][$i]->[1], "should equal");
-		cmp_ok($_[0][$i]->[2], '==', $_[1][$i]->[2], "should equal");
- 		cmp_ok($_[0][$i]->[3], '==', $_[1][$i]->[3], "should equal");
+ 		cmp_ok($_[0][$i][0], '==', $_[1][$i][0], "should equal");
+ 		cmp_ok($_[0][$i][1], '==', $_[1][$i][1], "should equal");
+		cmp_ok($_[0][$i][2], '==', $_[1][$i][2], "should equal");
+ 		cmp_ok($_[0][$i][3], '==', $_[1][$i][3], "should equal");
  		}
  	return(1);
  	}
 #-------------------------------------------------
+ sub CheckResults
+ 	{
+ 	for(my $i = 0; $i <= $#{$_[0]}; $i++)
+ 		{
+ 		warn("x1 : $_[0][$i][0]	x2 : $_[1][$i][0] \n");
+ 		warn("y1 : $_[0][$i][1]	y2 : $_[1][$i][1] \n"); 
+ 		}
+ 	}
+#------------------------------------------------
 

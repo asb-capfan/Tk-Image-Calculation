@@ -8,7 +8,7 @@
  use strict;
  use warnings;
 #-------------------------------------------------
- $Tk::Image::Calculation::VERSION = '0.01';
+ $Tk::Image::Calculation::VERSION = '0.02';
 #-------------------------------------------------
  sub new
  	{
@@ -26,8 +26,7 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([], [], [], []) if(($width < 5) || ($height < 5));
  	my $a = ($width / 2);
  	my $a2  = $a**2;
  	my $b = ($height / 2);
@@ -35,7 +34,7 @@
  	my $pos_x = ($a + $p_x1);
  	for(my $x = 0; $x <= $a; $x++)
  		{
- 		$d = int($c * sqrt(abs($a2 - ($x**2))));
+ 		$d = int($c * sqrt($a2 - ($x**2)));
  		$y1 = ($b - $d);
  		$y2 = ($b + $d);
 		$pos_x_p = int($x + $pos_x);
@@ -73,17 +72,16 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([]) if(($width < 5) || ($height < 5));
  	my $a = ($width / 2);
- 	my $a2  = $a**2;
+ 	my $a2  = ($a**2);
  	my $b = ($height / 2);
  	my $c = ($b / $a);
  	my $pos_x = ($a + $p_x1);
  	my @points_in;
  	for(my $x = 0; $x <= $a; $x++)
  		{
- 		$d = int($c * sqrt(abs($a2 - ($x**2))));
+ 		$d = int($c * sqrt($a2 - ($x**2)));
  		$y1 = ($b - $d);
  		$y2 = ($b + $d);
 		$pos_x_p = int($x + $pos_x);
@@ -105,17 +103,16 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([]) if(($width < 5) || ($height < 5));
  	my $a = ($width / 2);
- 	my $a2  = $a**2;
+ 	my $a2  = ($a**2);
  	my $b = ($height / 2);
  	my $c = ($b / $a);
  	my $pos_x = ($a + $p_x1);
  	my @points_out;
  	for(my $x = 0; $x <= $a; $x++)
  		{
- 		$d = int($c * sqrt(abs($a2 - ($x**2))));
+ 		$d = int($c * sqrt($a2 - ($x**2)));
  		$y1 = ($b - $d);
  		$y2 = ($b + $d);
 		$pos_x_p = int($x + $pos_x);
@@ -142,17 +139,16 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([]) if(($width < 5) || ($height < 5));
  	my $a = ($width / 2);
- 	my $a2  = $a**2;
+ 	my $a2  = ($a**2);
  	my $b = ($height / 2);
  	my $c = ($b / $a);
  	my $pos_x = ($a + $p_x1);
  	my @lines_in;
  	for(my $x = 0; $x <= $a; $x++)
  		{
- 		$d = int($c * sqrt(abs($a2 - ($x**2))));
+ 		$d = int($c * sqrt($a2 - ($x**2)));
  		$y1 = ($b - $d);
  		$y2 = ($b + $d);
 		$pos_x_p = int($x + $pos_x);
@@ -171,17 +167,16 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([]) if(($width < 5) || ($height < 5));
  	my $a = ($width / 2);
- 	my $a2  = $a**2;
+ 	my $a2  = ($a**2);
  	my $b = ($height / 2);
  	my $c = ($b / $a);
  	my $pos_x = ($a + $p_x1);
  	my @lines_out;
  	for(my $x = 0; $x <= $a; $x++)
  		{
- 		$d = int($c * sqrt(abs($a2 - ($x**2))));
+ 		$d = int($c * sqrt($a2 - ($x**2)));
  		$y1 = ($b - $d);
  		$y2 = ($b + $d);
 		$pos_x_p = int($x + $pos_x);
@@ -202,8 +197,7 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([], [], [], []) if(($width < 5) || ($height < 5));
  	my $r = int($width / 2);
  	my $r2 = ($r**2);  
  	my $coord_x = ($p_x1 + $r);
@@ -211,7 +205,7 @@
  	for(my $i_x = -$r; $i_x <= $r; $i_x++)
  		{
  		$pos_x = ($coord_x + $i_x);
- 		$diff_y = sqrt(abs($r2 - ($i_x**2)));
+ 		$diff_y = sqrt($r2 - ($i_x**2));
  		push(@lines_out, [$pos_x, $p_y1, $pos_x, ($coord_y - $diff_y)]);
  		push(@lines_out, [$pos_x, ($coord_y + $diff_y), $pos_x, $p_y2]);
  		push(@lines_in, [$pos_x, ($coord_y - $diff_y), $pos_x, ($coord_y + $diff_y)]);
@@ -240,8 +234,7 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([]) if(($width < 5) || ($height < 5));
  	my $r = int($width / 2);
  	my $r2 = ($r**2);  
  	my $coord_x = ($p_x1 + $r);
@@ -270,8 +263,7 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([]) if(($width < 5) || ($height < 5));
  	my $r = int($width / 2);
  	my $r2 = ($r**2);  
  	my $coord_x = ($p_x1 + $r);
@@ -301,8 +293,7 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([]) if(($width < 5) || ($height < 5));
  	my $r = int($width / 2);
  	my $r2 = ($r**2);  
  	my $coord_x = ($p_x1 + $r);
@@ -311,7 +302,7 @@
  	for(my $i_x = -$r; $i_x <= $r; $i_x++)
  		{
  		$pos_x = ($coord_x + $i_x);
- 		$diff_y = sqrt(abs($r2 - ($i_x**2)));
+ 		$diff_y = sqrt($r2 - ($i_x**2));
  		push(@lines_in, [$pos_x, ($coord_y - $diff_y), $pos_x, ($coord_y + $diff_y)]);
  		}
  	return(\@lines_in);
@@ -325,8 +316,7 @@
  	($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
  	my $width = ($p_x2 - $p_x1);
  	my $height= ($p_y2 - $p_y1);
- 	return([], [], [], []) if($width < 5);
- 	return([], [], [], []) if($height < 5);
+ 	return([]) if(($width < 5) || ($height < 5));
  	my $r = int($width / 2);
  	my $r2 = ($r**2);  
  	my $coord_x = ($p_x1 + $r);
@@ -335,7 +325,7 @@
  	for(my $i_x = -$r; $i_x <= $r; $i_x++)
  		{
  		$pos_x = ($coord_x + $i_x);
- 		$diff_y = sqrt(abs($r2 - ($i_x**2)));
+ 		$diff_y = sqrt($r2 - ($i_x**2));
  		push(@lines_out, [$pos_x, $p_y1, $pos_x, ($coord_y - $diff_y)]);
  		push(@lines_out, [$pos_x, ($coord_y + $diff_y), $pos_x, $p_y2]);
  		}
@@ -422,7 +412,7 @@ None by default.
 
 =head1 AUTHOR
 
-Torsten Knorr, E<lt>knorrcpan@tiscali.deE<gt>
+Torsten Knorr, E<lt>torstenknorr@tiscali.deE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -434,6 +424,7 @@ at your option, any later version of Perl 5 you may have available.
 
 
 =cut
+
 
 
 
