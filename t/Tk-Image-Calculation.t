@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
- use Test::More tests => 54789;
+ use Test::More tests => 93;
 # use Test::More "no_plan";
 BEGIN { use_ok('Tk::Image::Calculation') };
 
@@ -13,19 +13,77 @@ BEGIN { use_ok('Tk::Image::Calculation') };
 
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
+ my @results;
+ my ($cal1, $cal2);
+ my @t = (200, 300, 400, 500);
+ for my $form qw(
+ 	oval
+ 	circle
+ 	)
+ 	{
+ for my $subset qw(
+ 	points_outside
+ 	points_inside
+ 	)
+ 	{
+ 	ok($cal1 = Tk::Image::Calculation->new(
+ 		-form	=> $form,
+ 		-points	=> \@t,
+ 		-subset	=> $subset
+ 		));
+ 	isa_ok($cal1, "Tk::Image::Calculation");
+ 	ok($cal2 = Tk::Image::Calculation->new(
+ 		-form	=> $form,
+ 		-points	=> \@t,
+ 		-subset	=> $subset
+ 		));
+ 	isa_ok($cal2, "Tk::Image::Calculation");
+ 	ok(ComparePoints($cal1, $cal2));
+ 	$t[$_]++ for(0..3);
+ 	}
+ for my $subset qw(
+ 	lines_outside
+ 	lines_inside
+ 	)
+ 	{
+ 	ok($cal1 = Tk::Image::Calculation->new(
+ 		-form	=> $form,
+ 		-points	=> \@t,
+ 		-subset	=> $subset
+ 		));
+ 	isa_ok($cal1, "Tk::Image::Calculation");
+ 	ok($cal2 = Tk::Image::Calculation->new(
+ 		-form	=> $form,
+ 		-points	=> \@t,
+ 		-subset	=> $subset
+ 		));
+ 	isa_ok($cal2, "Tk::Image::Calculation");
+ 	ok(CompareLines($cal1, $cal2));
+ 	$t[$_]++ for(0..3);
+ 	}
+ ok($cal1 = Tk::Image::Calculation->new(
+ 	-form	=> $form,
+ 	-points	=> \@t,
+ 	-subset	=> "all"
+ 	));
+ isa_ok($cal1, "Tk::Image::Calculation");
+ ok($cal2 = Tk::Image::Calculation->new(
+ 	-form	=> $form,
+ 	-points	=> \@t,
+ 	-subset	=> "all"
+ 	));
+ isa_ok($cal2, "Tk::Image::Calculation");
+ ok(CompareHashs($cal1, $cal2));
+ $t[$_]++ for(0..3);
+ 	}
+ 	
  ok(my $cal = Tk::Image::Calculation->new());
  isa_ok($cal, "Tk::Image::Calculation");
+
  can_ok($cal, "GetPointsOval");
- my @results;
- ok(($results[0], $results[1], $results[2], $results[3]) = $cal->GetPointsOval(10, 20, 50, 80));
- ok(($results[4], $results[5], $results[6], $results[7]) = $cal->GetPointsOval(10, 20, 50, 80));
-
- #CheckResults($results[0], $results[4]);
-
- ok(ComparePoints($results[0], $results[4]));
- ok(ComparePoints($results[1], $results[5]));
- ok(CompareLines($results[2], $results[6]));
- ok(CompareLines($results[3], $results[7]));
+ ok($results[0] = $cal->GetPointsOval(10, 20, 50, 80));
+ ok($results[1] = $cal->GetPointsOval(10, 20, 50, 80));
+ ok(CompareHashs($results[0], $results[1]));
 
  can_ok($cal, "GetPointsInOval");
  ok($results[0] = $cal->GetPointsInOval(11, 21, 51, 81));
@@ -48,12 +106,9 @@ BEGIN { use_ok('Tk::Image::Calculation') };
  ok(CompareLines($results[0], $results[1]));
 
  can_ok($cal, "GetPointsCircle");
- ok(($results[0], $results[1], $results[2], $results[3]) = $cal->GetPointsCircle(14, 24, 114, 124));
- ok(($results[4], $results[5], $results[6], $results[7]) = $cal->GetPointsCircle(14, 24, 114, 124));
- ok(ComparePoints($results[0], $results[4]));
- ok(ComparePoints($results[1], $results[5]));
- ok(CompareLines($results[2], $results[6]));
- ok(CompareLines($results[3], $results[7]));
+ ok($results[0] = $cal->GetPointsCircle(14, 24, 114, 124));
+ ok($results[1] = $cal->GetPointsCircle(14, 24, 114, 124));
+ ok(CompareHashs($results[0], $results[1]));
 
  can_ok($cal, "GetPointsInCircle");
  ok($results[0] = $cal->GetPointsInCircle(15, 25, 115, 125));
@@ -80,8 +135,10 @@ BEGIN { use_ok('Tk::Image::Calculation') };
  	{
  	 for(my $i = 0; $i <= $#{$_[0]}; $i++)
  		{
- 		cmp_ok($_[0][$i][0], '==', $_[1][$i][0], "should equal");
- 		cmp_ok($_[0][$i][1], '==', $_[1][$i][1], "should equal");
+ 		# cmp_ok($_[0][$i][0], '==', $_[1][$i][0], "should equal");
+ 		# cmp_ok($_[0][$i][1], '==', $_[1][$i][1], "should equal");
+ 		return(0) if($_[0][$i][0] != $_[1][$i][0]);
+ 		return(0) if($_[0][$i][1] != $_[1][$i][1]);
  		}
  	return(1);
  	}
@@ -90,21 +147,28 @@ BEGIN { use_ok('Tk::Image::Calculation') };
  	{
  	 for(my $i = 0; $i <= $#{$_[0]}; $i++)
  		{
- 		cmp_ok($_[0][$i][0], '==', $_[1][$i][0], "should equal");
- 		cmp_ok($_[0][$i][1], '==', $_[1][$i][1], "should equal");
-		cmp_ok($_[0][$i][2], '==', $_[1][$i][2], "should equal");
- 		cmp_ok($_[0][$i][3], '==', $_[1][$i][3], "should equal");
+ 		# cmp_ok($_[0][$i][0], '==', $_[1][$i][0], "should equal");
+ 		# cmp_ok($_[0][$i][1], '==', $_[1][$i][1], "should equal");
+		# cmp_ok($_[0][$i][2], '==', $_[1][$i][2], "should equal");
+ 		# cmp_ok($_[0][$i][3], '==', $_[1][$i][3], "should equal");
+ 		return(0) if($_[0][$i][0] != $_[1][$i][0]);
+ 		return(0) if($_[0][$i][1] != $_[1][$i][1]);
+		return(0) if($_[0][$i][2] != $_[1][$i][2]);
+ 		return(0) if($_[0][$i][3] != $_[1][$i][3]);
  		}
  	return(1);
  	}
 #-------------------------------------------------
- sub CheckResults
+ sub CompareHashs
  	{
- 	for(my $i = 0; $i <= $#{$_[0]}; $i++)
- 		{
- 		warn("x1 : $_[0][$i][0]	x2 : $_[1][$i][0] \n");
- 		warn("y1 : $_[0][$i][1]	y2 : $_[1][$i][1] \n"); 
- 		}
+ 	return(0) if(!(ComparePoints($_[0]{points_outside}, $_[1]{points_outside})));
+ 	return(0) if(!(ComparePoints($_[0]{points_inside}, $_[1]{points_inside})));
+ 	return(0) if(!(CompareLines($_[0]{lines_outside}, $_[1]{lines_outside})));
+ 	return(0) if(!(CompareLines($_[0]{lines_inside}, $_[1]{lines_inside})));
+ 	return(1);
  	}
-#------------------------------------------------
+#-------------------------------------------------
+
+
+
 
