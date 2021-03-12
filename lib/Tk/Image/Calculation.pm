@@ -10,11 +10,6 @@
  	my ($class, @args) = @_;
  	my $self = {@args};
  	bless($self, $class || ref($class));
-=head1
- -form	=> circle oval polygon
- -points	=> [x1, y1, x2, y2]
- -subset	=> all points_outside points_inside lines_outside lines_inside
-=cut
 #-------------------------------------------------
  if(defined($self->{-points}) && defined($self->{-form}))
  {
