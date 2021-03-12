@@ -959,7 +959,6 @@ Tk::Image::Calculation - Perl extension for graphic calculations
 =head1 SEE ALSO
 
  Tk::Image::Cut
- http://www.planet-interkom.de/t.knorr/index.html
 
 =head1 KEYWORDS
 
@@ -971,7 +970,7 @@ Tk::Image::Calculation - Perl extension for graphic calculations
 
 =head1 AUTHOR
 
-Torsten Knorr, E<lt>torstenknorr@tiscali.deE<gt>
+Torsten Knorr
 
 =head1 COPYRIGHT AND LICENSE
 
