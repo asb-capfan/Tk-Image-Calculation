@@ -1,5 +1,8 @@
 Revision history for Perl extension Tk::Image::Calculation.
 
+0.05    2021-03-12
+    - fix RT #85439: "for $x qw( … ) { is deprecated"
+
 0.04    2006-03-12
     - the constructor was changed, the object is now always a hash
     - new graphic form added "polygon"
