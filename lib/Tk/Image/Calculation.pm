@@ -1,125 +1,133 @@
- package Tk::Image::Calculation;
+package Tk::Image::Calculation;
+
+use strict;
+use warnings;
+
 #-------------------------------------------------
- use strict;
- use warnings;
+$Tk::Image::Calculation::VERSION = '0.04';
 #-------------------------------------------------
- $Tk::Image::Calculation::VERSION = '0.04';
-#-------------------------------------------------
- sub new
-    {
+
+sub new
+{
     my ($class, @args) = @_;
     my $self = {@args};
     bless($self, $class || ref($class));
-#-------------------------------------------------
- if(defined($self->{-points}) && defined($self->{-form}))
- {
- FORM:
+
+    #-------------------------------------------------
+    if(defined($self->{-points}) && defined($self->{-form}))
     {
-    $self->{-subset} = "all" if(!(defined($self->{-subset})));
-    ($self->{-form} eq "oval")      && do
+        FORM:
         {
-        OVAL:
+            $self->{-subset} = "all" if(!(defined($self->{-subset})));
+            
+            ($self->{-form} eq "oval")      && do
             {
-            ($self->{-subset} eq "lines_outside")   && do
+                OVAL:
                 {
-                $self->GetLinesOutOval(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "points_outside")  && do 
-                {
-                $self->GetPointsOutOval(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "points_inside")   && do
-                {
-                $self->GetPointsInOval(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "lines_inside")    && do
-                {
-                $self->GetLinesInOval(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "all")     && do
-                {
-                $self->GetPointsOval(@{$self->{-points}});
-                last(FORM);
-                };
-            }
-        };
-    ($self->{-form} eq "circle")        && do
-        {
-        CIRCLE:
+                    ($self->{-subset} eq "lines_outside")   && do
+                    {
+                        $self->GetLinesOutOval(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "points_outside")  && do 
+                    {
+                        $self->GetPointsOutOval(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "points_inside")   && do
+                    {
+                        $self->GetPointsInOval(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "lines_inside")    && do
+                    {
+                        $self->GetLinesInOval(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "all")     && do
+                    {
+                        $self->GetPointsOval(@{$self->{-points}});
+                        last(FORM);
+                    };
+                }
+            };
+            
+            ($self->{-form} eq "circle")        && do
             {
-            ($self->{-subset} eq "lines_outside")   && do
+                CIRCLE:
                 {
-                $self->GetLinesOutCircle(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "points_outside")  && do
-                {
-                $self->GetPointsOutCircle(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "points_inside")   && do
-                {
-                $self->GetPointsInCircle(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "lines_inside")    && do
-                {
-                $self->GetLinesInCircle(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "all")     && do
-                {
-                $self->GetPointsCircle(@{$self->{-points}});
-                last(FORM);
-                };
-            }
-        };
-    ($self->{-form} eq "polygon")   && do
-        {
-        POLYGON:
+                    ($self->{-subset} eq "lines_outside")   && do
+                    {
+                        $self->GetLinesOutCircle(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "points_outside")  && do
+                    {
+                        $self->GetPointsOutCircle(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "points_inside")   && do
+                    {
+                        $self->GetPointsInCircle(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "lines_inside")    && do
+                    {
+                        $self->GetLinesInCircle(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "all")     && do
+                    {
+                        $self->GetPointsCircle(@{$self->{-points}});
+                        last(FORM);
+                    };
+                }
+            };
+            
+            ($self->{-form} eq "polygon")   && do
             {
-            ($self->{-subset} eq "lines_outside")   && do
+                POLYGON:
                 {
-                $self->GetLinesOutPolygon(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "points_outside") && do
-                {
-                $self->GetPointsOutPolygon(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "lines_inside")    && do
-                {
-                $self->GetLinesInPolygon(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "points_inside")   && do
-                {
-                $self->GetPointsInPolygon(@{$self->{-points}});
-                last(FORM);
-                };
-            ($self->{-subset} eq "all")     && do
-                {
-                $self->GetPointsPolygon(@{$self->{-points}});
-                last(FORM);
-                };
-            }
-        };
-    warn("wrong args in call to Tk::Image::Calculation::new()\n");
-    }       
- }
-#-------------------------------------------------
-    return($self);
+                    ($self->{-subset} eq "lines_outside")   && do
+                    {
+                        $self->GetLinesOutPolygon(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "points_outside") && do
+                    {
+                        $self->GetPointsOutPolygon(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "lines_inside")    && do
+                    {
+                        $self->GetLinesInPolygon(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "points_inside")   && do
+                    {
+                        $self->GetPointsInPolygon(@{$self->{-points}});
+                        last(FORM);
+                    };
+                    ($self->{-subset} eq "all")     && do
+                    {
+                        $self->GetPointsPolygon(@{$self->{-points}});
+                        last(FORM);
+                    };
+                }
+            };
+            
+            warn("wrong args in call to Tk::Image::Calculation::new()\n");
+        }
     }
+    #-------------------------------------------------
+    return($self);
+}
+
 #-------------------------------------------------
 # OVAL
 #-------------------------------------------------
- sub GetPointsOval
-    {
+sub GetPointsOval
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my (@points_out, @points_in, @lines_out, @lines_in);
     my ($pos_x_p, $pos_x_n, $pos_y1, $pos_y2);
@@ -129,26 +137,30 @@
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+    
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{points_outside} = [];
         $self->{points_inside}  = [];
         $self->{lines_outside}  = [];
         $self->{lines_inside}   = [];
+        
         return({
             points_outside  => [],
             points_inside   => [],
             lines_outside   => [],
             lines_inside    => []
-            });
-        }
+        });
+    }
+    
     my $a = ($width / 2);
     my $a2  = $a ** 2;
     my $b = ($height / 2);
     my $c = ($b / $a);
     my $pos_x = ($a + $p_x1);
+    
     for(my $x = 0; $x <= $a; $x++)
-        {
+    {
         $diff = int($c * sqrt($a2 - ($x ** 2)));
         $y1 = ($b - $diff);
         $y2 = ($b + $diff);
@@ -156,45 +168,51 @@
         $pos_y2 = ($y2 + $p_y1);
         $pos_x_p = int($x + $pos_x);
         $pos_x_n = int(-$x + $pos_x);
+        
         push(@lines_out, [$pos_x_p, $p_y1, $pos_x_p, $pos_y1]);
         push(@lines_out, [$pos_x_n, $p_y1, $pos_x_n, $pos_y1]);
         push(@lines_in, [$pos_x_p, $pos_y1, $pos_x_p, $pos_y2]);
         push(@lines_in, [$pos_x_n, $pos_y1, $pos_x_n, $pos_y2]);
         push(@lines_out, [$pos_x_p, $pos_y2, $pos_x_p, $p_y2]);
         push(@lines_out, [$pos_x_n, $pos_y2, $pos_x_n, $p_y2]);
+        
         for($y = 0; $y <= $y1; $y++)
-            {
+        {
             $pos_y1 = ($y + $p_y1);
             push(@points_out, [$pos_x_p, $pos_y1]);
             push(@points_out, [$pos_x_n, $pos_y1]);
-            } 
+        }
+        
         for($y = $y1; $y <= $y2; $y++)
-            {
+        {
             $pos_y1 = ($y + $p_y1);
             push(@points_in, [$pos_x_p, $pos_y1]);
             push(@points_in, [$pos_x_n, $pos_y1]);
-            }
+        }
+        
         for($y = $y2; $y <= $height; $y++)
-            {
+        {
             $pos_y1 = ($y + $p_y1);
             push(@points_out, [$pos_x_p, $pos_y1]);
             push(@points_out, [$pos_x_n, $pos_y1]);
-            }
         }
+    }
     $self->{points_outside} = \@points_out;
     $self->{points_inside}  = \@points_in;
     $self->{lines_outside}  = \@lines_out;
     $self->{lines_inside}   = \@lines_in;
+    
     return({
         points_outside  => \@points_out, 
         points_inside   => \@points_in, 
         lines_outside   => \@lines_out, 
         lines_inside    => \@lines_in
-        });
-    }
+    });
+}
+
 #-------------------------------------------------
- sub GetPointsInOval
-    {
+sub GetPointsInOval
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my ($pos_x_p, $pos_x_n, $pos_y1);
     my ($y, $y1, $y2);
@@ -203,37 +221,42 @@
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+    
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{points_inside} = [];
         return([]);
-        }
+    }
+
     my $a = ($width / 2);
     my $a2  = ($a**2);
     my $b = ($height / 2);
     my $c = ($b / $a);
     my $pos_x = ($a + $p_x1);
     my @points_in;
+
     for(my $x = 0; $x <= $a; $x++)
-        {
+    {
         $diff = int($c * sqrt($a2 - ($x**2)));
         $y1 = ($b - $diff);
         $y2 = ($b + $diff);
         $pos_x_p = int($x + $pos_x);
         $pos_x_n = int(-$x + $pos_x);
+        
         for($y = $y1; $y <= $y2; $y++)
-            {
+        {
             $pos_y1 = ($y + $p_y1);
             push(@points_in, [$pos_x_p, $pos_y1]);
             push(@points_in, [$pos_x_n, $pos_y1]);
-            }
         }
+    }
     $self->{points_inside} = \@points_in;
     return(\@points_in);
-    }
+}
+
 #-------------------------------------------------
- sub GetPointsOutOval
-    {
+sub GetPointsOutOval
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my ($pos_x_p, $pos_x_n, $pos_y1);
     my ($y, $y1, $y2);
@@ -242,43 +265,50 @@
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{points_outside} = [];
         return([]);
-        }
+    }
+
     my $a = ($width / 2);
     my $a2  = ($a**2);
     my $b = ($height / 2);
     my $c = ($b / $a);
     my $pos_x = ($a + $p_x1);
     my @points_out;
+
     for(my $x = 0; $x <= $a; $x++)
-        {
+    {
         $diff = int($c * sqrt($a2 - ($x**2)));
         $y1 = ($b - $diff);
         $y2 = ($b + $diff);
         $pos_x_p = int($x + $pos_x);
         $pos_x_n = int(-$x + $pos_x);
+
         for($y = 0; $y <= $y1; $y++)
-            {
+        {
             $pos_y1 = ($y + $p_y1);
             push(@points_out, [$pos_x_p, $pos_y1]);
             push(@points_out, [$pos_x_n, $pos_y1]);
-            } 
+        } 
+
         for($y = $y2; $y <= $height; $y++)
-            {
+        {
             $pos_y1 = ($y + $p_y1);
             push(@points_out, [$pos_x_p, $pos_y1]);
             push(@points_out, [$pos_x_n, $pos_y1]);
-            }
         }
+    }
+    
     $self->{points_outside} = \@points_out;
     return(\@points_out);
-    }
+}
+
 #-------------------------------------------------
- sub GetLinesInOval
-    {
+sub GetLinesInOval
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my ($pos_x_p, $pos_x_n, $pos_y1, $pos_y2);
     my ($y, $y1, $y2);
@@ -287,19 +317,22 @@
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+    
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{lines_inside} = [];
         return([]);
-        }
+    }
+    
     my $a = ($width / 2);
     my $a2  = ($a**2);
     my $b = ($height / 2);
     my $c = ($b / $a);
     my $pos_x = ($a + $p_x1);
     my @lines_in;
+
     for(my $x = 0; $x <= $a; $x++)
-        {
+    {
         $diff = int($c * sqrt($a2 - ($x**2)));
         $y1 = ($b - $diff);
         $y2 = ($b + $diff);
@@ -309,13 +342,15 @@
         $pos_y2 = ($y2 + $p_y1);
         push(@lines_in, [$pos_x_p, $pos_y1, $pos_x_p, $pos_y2]);
         push(@lines_in, [$pos_x_n, $pos_y1, $pos_x_n, $pos_y2]);
-        }
+    }
+
     $self->{lines_inside} = \@lines_in;
     return(\@lines_in);
-    }
+}
+
 #-------------------------------------------------
- sub GetLinesOutOval
-    {
+sub GetLinesOutOval
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my ($pos_x_p, $pos_x_n, $pos_y1, $pos_y2);
     my ($y, $y1, $y2);
@@ -324,19 +359,22 @@
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{lines_outside} = [];
         return([]);
-        }
+    }
+
     my $a = ($width / 2);
     my $a2  = ($a**2);
     my $b = ($height / 2);
     my $c = ($b / $a);
     my $pos_x = ($a + $p_x1);
     my @lines_out;
+
     for(my $x = 0; $x <= $a; $x++)
-        {
+    {
         $diff = int($c * sqrt($a2 - ($x**2)));
         $y1 = ($b - $diff);
         $y2 = ($b + $diff);
@@ -348,15 +386,17 @@
         push(@lines_out, [$pos_x_n, $p_y1, $pos_x_n, $pos_y1]); 
         push(@lines_out, [$pos_x_p, $pos_y2, $pos_x_p, $p_y2]);
         push(@lines_out, [$pos_x_n, $pos_y2, $pos_x_n, $p_y2]);
-        }
+    }
+
     $self->{lines_outside} = \@lines_out;
     return(\@lines_out);
-    }
+}
+
 #-------------------------------------------------
 # CIRCLE
 #-------------------------------------------------
- sub GetPointsCircle
-    {
+sub GetPointsCircle
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my (@points_out, @points_in, @lines_out, @lines_in);
     my ($x2py2, $pos_x, $pos_y1, $pos_y2);
@@ -366,327 +406,384 @@
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{points_outside} = [];
         $self->{points_inside}  = [];
         $self->{lines_outside}  = [];
         $self->{lines_inside}   = [];
+
         return({
             points_outside  => [],
             points_inside   => [],
             lines_outside   => [],
             lines_inside    => []
-            });
-        }
+        });
+    }
+
     my $r = int($width / 2);
     my $r2 = ($r**2);  
     my $coord_x = ($p_x1 + $r);
     my $coord_y = ($p_y1 + $r);
     for(my $i_x = -$r; $i_x <= $r; $i_x++)
-        {
+    {
         $i_x2 = ($i_x ** 2);
         $diff_y = int(sqrt($r2 - $i_x2));
         $pos_x = ($coord_x + $i_x);
         $pos_y1 = ($coord_y + $diff_y);
         $pos_y2 = ($coord_y - $diff_y);
+
         push(@lines_out, [$pos_x, $p_y1, $pos_x, $pos_y2]);
         push(@lines_out, [$pos_x, $pos_y1, $pos_x, $p_y2]);
         push(@lines_in, [$pos_x, $pos_y2, $pos_x, $pos_y1]);
+
         for($i_y = $r; $i_y >= -$r; $i_y--)
-            {
+        {
             $pos_y1 = ($coord_y + $i_y);
             $x2py2 = ($i_x2 + ($i_y ** 2));
+
             if($x2py2 < $r2)
-                {
+            {
                 push(@points_in, [$pos_x, $pos_y1]);
-                }
+            }
             elsif($x2py2 > $r2)
-                {
+            {
                 push(@points_out, [$pos_x, $pos_y1]);
-                }
-            } 
-        }
+            }
+        } 
+    }
+
     $self->{points_outside} = \@points_out;
     $self->{points_inside}  = \@points_in;
     $self->{lines_outside}  = \@lines_out;
     $self->{lines_inside}   = \@lines_in;
+
     return({
         points_outside  => \@points_out,
         points_inside   =>  \@points_in, 
         lines_outside   => \@lines_out, 
         lines_inside    => \@lines_in
-        });
-    }
+    });
+}
+
 #-------------------------------------------------
- sub GetPointsInCircle
-    {
+sub GetPointsInCircle
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my ($x2py2, $i_y);
     ($p_x1, $p_x2) = ($p_x2, $p_x1) if($p_x1 > $p_x2); 
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{points_inside} = [];
         return([]);
-        }
+    }
+
     my $r = int($width / 2);
     my $r2 = ($r ** 2);  
     my $coord_x = ($p_x1 + $r);
     my $coord_y = ($p_y1 + $r);
     my @points_in;
+
     for(my $i_x = -$r; $i_x <= $r; $i_x++)
-        {
+    {
         for($i_y = $r; $i_y >= -$r; $i_y--)
-            {
+        {
             $x2py2 = (($i_x ** 2) + ($i_y ** 2));
             if($x2py2 < $r2)
-                {
+            {
                 push(@points_in, [($coord_x + $i_x), ($coord_y + $i_y)]);
-                }           
-            } 
-        }
+            }           
+        } 
+    }
+
     $self->{points_inside} = \@points_in;
     return(\@points_in);
-    }
+}
+
 #-------------------------------------------------
- sub GetPointsOutCircle
-    {
+sub GetPointsOutCircle
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my ($x2py2, $i_y);
     ($p_x1, $p_x2) = ($p_x2, $p_x1) if($p_x1 > $p_x2); 
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{points_outside} = [];
         return([]);
-        }
+    }
+
     my $r = int($width / 2);
     my $r2 = ($r ** 2);  
     my $coord_x = ($p_x1 + $r);
     my $coord_y = ($p_y1 + $r);
     my @points_out;
+
     for(my $i_x = -$r; $i_x <= $r; $i_x++)
-        {
+    {
         for($i_y = $r; $i_y >= -$r; $i_y--)
-            {
+        {
             $x2py2 = (($i_x ** 2) + ($i_y ** 2));
             if($x2py2 > $r2)
-                {
+            {
                 push(@points_out, [($coord_x + $i_x), ($coord_y + $i_y)]);
-                }
-            } 
-        }
+            }
+        } 
+    }
+
     $self->{points_outside} = \@points_out;
     return(\@points_out);
-    }
+}
+
 #-------------------------------------------------
- sub GetLinesInCircle
-    {
+sub GetLinesInCircle
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my ($x2py2, $pos_x, $diff_y);
     ($p_x1, $p_x2) = ($p_x2, $p_x1) if($p_x1 > $p_x2); 
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+    
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{lines_inside} = [];
         return([]);
-        }
+    }
+    
     my $r = int($width / 2);
     my $r2 = ($r ** 2);  
     my $coord_x = ($p_x1 + $r);
     my $coord_y = ($p_y1 + $r);
     my @lines_in;
+    
     for(my $i_x = -$r; $i_x <= $r; $i_x++)
-        {
+    {
         $pos_x = ($coord_x + $i_x);
         $diff_y = int(sqrt($r2 - ($i_x ** 2)));
         push(@lines_in, [$pos_x, ($coord_y - $diff_y), $pos_x, ($coord_y + $diff_y)]);
-        }
+    }
+    
     $self->{lines_inside} = \@lines_in;
     return(\@lines_in);
-    }
+}
+
 #-------------------------------------------------
- sub GetLinesOutCircle
-    {
+sub GetLinesOutCircle
+{
     my ($self, $p_x1, $p_y1, $p_x2, $p_y2) = @_;
     my ($x2py2, $pos_x, $diff_y);
     ($p_x1, $p_x2) = ($p_x2, $p_x1) if($p_x1 > $p_x2); 
     ($p_y1, $p_y2) = ($p_y2, $p_y1) if($p_y1 > $p_y2);
     my $width = ($p_x2 - $p_x1);
     my $height= ($p_y2 - $p_y1);
+
     if(($width < 5) || ($height < 5))
-        {
+    {
         $self->{lines_outside} = [];
         return([]);
-        }
+    }
+
     my $r = int($width / 2);
     my $r2 = ($r ** 2);  
     my $coord_x = ($p_x1 + $r);
     my $coord_y = ($p_y1 + $r);
     my @lines_out;
+
     for(my $i_x = -$r; $i_x <= $r; $i_x++)
-        {
+    {
         $pos_x = ($coord_x + $i_x);
         $diff_y = int(sqrt($r2 - ($i_x ** 2)));
         push(@lines_out, [$pos_x, $p_y1, $pos_x, ($coord_y - $diff_y)]);
         push(@lines_out, [$pos_x, ($coord_y + $diff_y), $pos_x, $p_y2]);
-        }
+    }
+
     $self->{lines_outside} = \@lines_out;
     return(\@lines_out);
-    }
+}
+
 #-------------------------------------------------
 # POLYGON
 #-------------------------------------------------
- sub GetPointsPolygon
-    {
+sub GetPointsPolygon
+{
     my ($self) = @_;
     my $ref_p_x = _CalculatePolygon(@_);
     my (@points_out, @points_in, @lines_out, @lines_in);
     my $i_1 = my $i_2 = my $i_3 = 0;
     my $p_x_temp;
+
     for(my $p_y = $self->{min_y}; $p_y <= $self->{max_y}; $p_y++)
-        {
+    {
         $p_x_temp = $self->{min_x};
         for($i_2 = 0; $i_2 <= $#{$ref_p_x->[$i_1]}; $i_2 += 2)
-            {
+        {
             push(@lines_in, [$ref_p_x->[$i_1][$i_2], $p_y, $ref_p_x->[$i_1][$i_2 + 1], $p_y]);
             for($i_3 = $ref_p_x->[$i_1][$i_2]; $i_3 <= $ref_p_x->[$i_1][$i_2 + 1]; $i_3++)
-                {
+            {
                 push(@points_in, [$i_3, $p_y]);
-                }
+            }
+
             push(@lines_out, [$p_x_temp, $p_y, $ref_p_x->[$i_1][$i_2], $p_y]);
             for($i_3 = $p_x_temp; $i_3 <= $ref_p_x->[$i_1][$i_2]; $i_3++)
-                {
+            {
                 push(@points_out, [$i_3, $p_y]);
-                }
-            $p_x_temp = $ref_p_x->[$i_1][$i_2 + 1];
             }
+
+            $p_x_temp = $ref_p_x->[$i_1][$i_2 + 1];
+        }
+
         push(@lines_out, [$p_x_temp, $p_y, $self->{max_x}, $p_y]);
         for($i_3 = $p_x_temp; $i_3 <= $self->{max_x}; $i_3++)
-            {
+        {
             push(@points_out, [$i_3, $p_y]);
-            }
-        $i_1++;
         }
+
+        $i_1++;
+    }
+
     $self->{lines_outside}  = \@lines_out;
     $self->{lines_inside}   = \@lines_in;
     $self->{points_outside} = \@points_out;
     $self->{points_inside}  = \@points_in;
+
     return({
         lines_outside   => \@lines_out,
         lines_inside    => \@lines_in,
         points_outside  => \@points_out,
         points_inside   => \@points_in,
-        });
-    }
+    });
+}
+
 #-------------------------------------------------
- sub GetPointsInPolygon
-    {
+sub GetPointsInPolygon
+{
     my ($self) = @_;
     my $ref_p_x = _CalculatePolygon(@_);
     my @points_in = ();
     my $i_1 = my $i_2 = my $i_3 = 0;
+
     for(my $p_y = $self->{min_y}; $p_y <= $self->{max_y}; $p_y++)
-        {
+    {
         for($i_2 = 0; $i_2 <= $#{$ref_p_x->[$i_1]}; $i_2 += 2)
-            {
+        {
             for($i_3 = $ref_p_x->[$i_1][$i_2]; $i_3 <= $ref_p_x->[$i_1][$i_2 + 1]; $i_3++)
-                {
+            {
                 push(@points_in, [$i_3, $p_y]);
-                }
             }
-        $i_1++;
         }
+
+        $i_1++;
+    }
+
     $self->{points_inside} = \@points_in;
     return(\@points_in);
-    }
+}
+
 #-------------------------------------------------
- sub GetPointsOutPolygon
-    {
+sub GetPointsOutPolygon
+{
     my ($self) = @_;
     my $ref_p_x = _CalculatePolygon(@_);
     my @points_out = ();
     my $i_1 = my $i_2 = my $i_3 = 0;
     my $p_x_temp;
+
     for(my $p_y = $self->{min_y}; $p_y <= $self->{max_y}; $p_y++)
-        {
+    {
         $p_x_temp = $self->{min_x};
         for($i_2 = 0; $i_2 <= $#{$ref_p_x->[$i_1]}; $i_2 += 2)
-            {
+        {
             for($i_3 = $p_x_temp; $i_3 <= $ref_p_x->[$i_1][$i_2]; $i_3++)
-                {
-                push(@points_out, [$i_3, $p_y]);
-                }
-            $p_x_temp = $ref_p_x->[$i_1][$i_2 + 1];
-            }
-        for($i_3 = $p_x_temp; $i_3 <= $self->{max_x}; $i_3++)
             {
-            push(@points_out, [$i_3, $p_y]);
+                push(@points_out, [$i_3, $p_y]);
             }
-        $i_1++;
+            $p_x_temp = $ref_p_x->[$i_1][$i_2 + 1];
         }
+
+        for($i_3 = $p_x_temp; $i_3 <= $self->{max_x}; $i_3++)
+        {
+            push(@points_out, [$i_3, $p_y]);
+        }
+
+        $i_1++;
+    }
+
     $self->{points_outside} = \@points_out;
     return(\@points_out);
-    }
+}
+
 #-------------------------------------------------
- sub GetLinesInPolygon
-    {
+sub GetLinesInPolygon
+{
     my ($self) = @_;
     my $ref_p_x = _CalculatePolygon(@_);
     my @lines_in = ();
     my $i_1 = my $i_2 = 0;
+
     for(my $p_y = $self->{min_y}; $p_y <= $self->{max_y}; $p_y++)
-        {
+    {
         for($i_2 = 0; $i_2 <= $#{$ref_p_x->[$i_1]}; $i_2 += 2)
-            {
+        {
             push(@lines_in, [$ref_p_x->[$i_1][$i_2], $p_y, $ref_p_x->[$i_1][$i_2 + 1], $p_y]);
-            }
-        $i_1++;
         }
+
+        $i_1++;
+    }
+
     $self->{lines_inside} = \@lines_in;
     return(\@lines_in);
-    }
+}
+
 #-------------------------------------------------
- sub GetLinesOutPolygon
-    {
+sub GetLinesOutPolygon
+{
     my ($self) = @_;
     my $ref_p_x = _CalculatePolygon(@_);
     my @lines_out = ();
     my $i_1 = my $i_2 = 0;
     my $p_x_temp;
+
     for(my $p_y = $self->{min_y}; $p_y <= $self->{max_y}; $p_y++)
-        {
+    {
         $p_x_temp = $self->{min_x};
         for($i_2 = 0; $i_2 <= $#{$ref_p_x->[$i_1]}; $i_2 += 2)
-            {
+        {
             push(@lines_out, [$p_x_temp, $p_y, $ref_p_x->[$i_1][$i_2], $p_y]);
             $p_x_temp = $ref_p_x->[$i_1][$i_2 + 1];
-            }
+        }
+
         push(@lines_out, [$p_x_temp, $p_y, $self->{max_x}, $p_y]);
         $i_1++;
-        }
+    }
+
     $self->{lines_outside} = \@lines_out;
     return(\@lines_out);
-    }
+}
+
 #-------------------------------------------------
- sub _CalculatePolygon
-    {
+sub _CalculatePolygon
+{
     my ($self, @points) = @_;
     my @p;
+
     for(my $i = 0; $i <= $#points; $i += 2)
-        {
+    {
         push(@p, { x => $points[$i], y => $points[$i + 1]});
-        }
+    }
+
     push(@p, {x => $points[0], y => $points[1]});
     my $points_count = $#p;
     return([]) if($points_count < 3);
+
     my ($index_1, $index_2,  $index_count); 
     my ($p_y, $p_y1, $p_y2, $p_x1, $p_x2, $p_x_temp);
     my @points_outline_x = ();
@@ -694,74 +791,86 @@
     my ($i, $j);
     $self->{min_y} = $self->{max_y} = $p[0]{y};
     $self->{min_x} = $self->{max_x} = $p[0]{x};
+
     for(0..$#p)
-        {
+    {
         $self->{min_y} = $p[$_]{y} if($self->{min_y} > $p[$_]{y});
         $self->{max_y} = $p[$_]{y} if($self->{max_y} < $p[$_]{y});
         $self->{min_x} = $p[$_]{x} if($self->{min_x} > $p[$_]{x});
         $self->{max_x} = $p[$_]{x} if($self->{max_x} < $p[$_]{x});
-        }
+    }
+
     for($p_y = $self->{min_y}; $p_y <= $self->{max_y}; $p_y++)
-        {
+    {
         $index_count = 0;
         @points_outline_x = ();
         for($i = 0; $i < $points_count; $i++)
-            {
+        {
             if(!$i)
-                {
+            {
                 $index_1 = $points_count - 1;   
                 $index_2 = 0;       
-                }
+            }
             else
-                {
+            {
                 $index_1 = $i - 1;          
                 $index_2 = $i;  
-                }
+            }
+
             $p_y1 = $p[$index_1]{y};
             $p_y2 = $p[$index_2]{y};
+
             if($p_y1 < $p_y2)
-                {
+            {
                 $p_x1 = $p[$index_1]{x};
                 $p_x2 = $p[$index_2]{x};
-                }
+            }
             elsif ($p_y1 > $p_y2)
-                {
+            {
                 $p_y2 = $p[$index_1]{y};
                 $p_y1 = $p[$index_2]{y};
                 $p_x2 = $p[$index_1]{x};
                 $p_x1 = $p[$index_2]{x};
-                }
-            else
-                {
-                next;
-                }
-            if(($p_y >= $p_y1) && ($p_y < $p_y2))
-                {
- $points_outline_x[$index_count++] = int((($p_y - $p_y1) * ($p_x2 - $p_x1)) /  ($p_y2 - $p_y1) + 0.5 + $p_x1);
-                }
-            elsif(($p_y == $self->{max_y}) && ($p_y > $p_y1) && ($p_y <= $p_y2))
-                {
- $points_outline_x[$index_count++] = int((($p_y - $p_y1) * ($p_x2 - $p_x1)) / ($p_y2 - $p_y1) + 0.5 + $p_x1);
-                }
             }
-        for($i = 1; $i < $index_count; $i++) 
+            else
             {
+                next;
+            }
+
+            if(($p_y >= $p_y1) && ($p_y < $p_y2))
+            {
+                $points_outline_x[$index_count++] = int((($p_y - $p_y1) * ($p_x2 - $p_x1)) /  ($p_y2 - $p_y1) + 0.5 + $p_x1);
+            }
+            elsif(($p_y == $self->{max_y}) && ($p_y > $p_y1) && ($p_y <= $p_y2))
+            {
+                 $points_outline_x[$index_count++] = int((($p_y - $p_y1) * ($p_x2 - $p_x1)) / ($p_y2 - $p_y1) + 0.5 + $p_x1);
+            }
+        }
+ 
+        for($i = 1; $i < $index_count; $i++) 
+        {
             $p_x_temp = $points_outline_x[$i];
             $j = $i;
+
             while(($j > 0) && ($points_outline_x[$j - 1] > $p_x_temp)) 
-                {
+            {
                 $points_outline_x[$j] = $points_outline_x[$j - 1];
                 $j--;
-                }
-            $points_outline_x[$j] = $p_x_temp;
             }
-        push(@all_points_outline_x, [@points_outline_x]);
+
+            $points_outline_x[$j] = $p_x_temp;
         }
-    return(\@all_points_outline_x);
+
+        push(@all_points_outline_x, [@points_outline_x]);
     }
-#-------------------------------------------------
-1;
-#-------------------------------------------------
+
+    return(\@all_points_outline_x);
+}
+
+1; # /Tk::Image::Calculation
+
+
+
 __END__
 
 =head1 NAME
