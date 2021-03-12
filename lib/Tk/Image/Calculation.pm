@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 #-------------------------------------------------
-$Tk::Image::Calculation::VERSION = '0.04';
+$Tk::Image::Calculation::VERSION = '0.05';
 #-------------------------------------------------
 
 sub new
