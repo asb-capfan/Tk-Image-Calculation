@@ -775,82 +775,88 @@ Tk::Image::Calculation - Perl extension for graphic calculations
 
 =head1 SYNOPSIS
 
-#-------------------------------------------------
- use Tk::Image::Calculation;
- my @points_oval = (10, 10, 30, 50);
- my @points_circle = (20, 20, 60, 60);
- my @points_polygon = (136, 23, 231, 55, 463, 390, 338, 448, 182, 401, 148, 503, 15, 496, 9, 87);
-# polygon = (x1, y1, x2, y2, x3, y3, x4, y4, ... and so on)
-#-------------------------------------------------
- my $cal = Tk::Image::Calculation->new();	
- my $ref_array = $cal->GetPointsInOval(@points_oval);
-# my $ref_array = $cal->GetPointsOutOval(@points_oval);
-# my $ref_array = $cal->GetPointsInCircle(@points_circle);
-# my $ref_array = $cal->GetPointsOutCircle(@points_circle);
-# my $ref_array = $cal->GetPointsInPolygon(@points_polygon);
-# my $ref_array = $cal->GetPointsOutPolygon(@points_polygon);
- for(@{$ref_array})
- 	{
- 	print("x:$_->[0]	y:$_->[1]\n");
- 	}
- my $ref_array1 = $cal->GetLinesInOval(@points_oval);
-# my $ref_array1 = $cal->GetLinesOutOval(@points_oval);
-# my $ref_array1 = $cal->GetLinesInCircle(@points_circle);
-# my $ref_array1 = $cal->GetLinesOutCircle(@points_circle);
-# my $ref_array1 = $cal->GetLinesInPolygon(@points_polygon);
-# my $ref_array1 = $cal->GetLinesOutPolygon(@points_polygon);
- for(@{$ref_array1})
- 	{
- 	print("x1:$_->[0]	y1:$_->[1]	x2:$_->[2]	y2:$_->[3]\n");
- 	}
-#-------------------------------------------------
- my $cal1 = Tk::Image::Calculation->new(
- 	-points	=> \@points_circle,
- 	-form	=> "circle", # or "oval" or "polygon"
- 	);
- for my $subset ("points_inside", "points_outside")
- 	{
- 	print("\n$subset circle : \n");
- 	for(@{$cal1->{$subset}})
- 		{
- 		print("x:$_->[0]	y:$_->[1]\n");
- 		}
- 	}
- for my $subset ("lines_inside", "lines_outside")
- 	{
- 	print("\n$subset circle : \n");
- 	for(@{$cal1->{$subset}})
- 		{
- 		print("x1:$_->[0]	y1:$_->[1]	x2:$_->[2]	y2:$_->[3]\n");
- 		}
- 	}
-#-------------------------------------------------
- my $cal2 = Tk::Image::Calculation->new(
- 	-points => \@points_polygon, # need three points at least
- 	-form	=> "polygon", 
- 	-subset	=> "lines_outside", # defaults to "all"
- 	);
- use Tk;
- my $mw = MainWindow->new();
- my $canvas = $mw->Canvas(
- 	-width	=> 800,
- 	-height	=> 600,
- 	)->pack();
- for(@{$cal2->{lines_outside}})
- 	{
- 	$canvas->createLine(@{$_});
- 	}
- MainLoop();
-#-------------------------------------------------
- use Tk;
- use Tk::JPEG;
- my $mw = MainWindow->new();
- my $image = $mw->Photo(-file => "test.jpg");
- my $cal3 = Tk::Image::Calculation->new();
- my $ref_points = $cal3->GetPointsOutCircle(50, 50, 150,  150);
- $image->put("#FFFFFF", -to => $_->[0], $_->[1]) for(@{$ref_points});
- $image->write("new.jpg", -from => 50, 50, 150, 150);
-#-------------------------------------------------
+    use Tk::Image::Calculation;
+    my @points_oval = (10, 10, 30, 50);
+    my @points_circle = (20, 20, 60, 60);
+    my @points_polygon = (136, 23, 231, 55, 463, 390, 338, 448, 182, 401, 148, 503, 15, 496, 9, 87);
+    # polygon = (x1, y1, x2, y2, x3, y3, x4, y4, ... and so on)
+    
+    my $cal = Tk::Image::Calculation->new();	
+    my $ref_array = $cal->GetPointsInOval(@points_oval);
+    # my $ref_array = $cal->GetPointsOutOval(@points_oval);
+    # my $ref_array = $cal->GetPointsInCircle(@points_circle);
+    # my $ref_array = $cal->GetPointsOutCircle(@points_circle);
+    # my $ref_array = $cal->GetPointsInPolygon(@points_polygon);
+    # my $ref_array = $cal->GetPointsOutPolygon(@points_polygon);
+    
+    for(@{$ref_array})
+    {
+        print("x:$_->[0]	y:$_->[1]\n");
+    }
+    
+    my $ref_array1 = $cal->GetLinesInOval(@points_oval);
+    # my $ref_array1 = $cal->GetLinesOutOval(@points_oval);
+    # my $ref_array1 = $cal->GetLinesInCircle(@points_circle);
+    # my $ref_array1 = $cal->GetLinesOutCircle(@points_circle);
+    # my $ref_array1 = $cal->GetLinesInPolygon(@points_polygon);
+    # my $ref_array1 = $cal->GetLinesOutPolygon(@points_polygon);
+    for(@{$ref_array1})
+    {
+        print("x1:$_->[0]	y1:$_->[1]	x2:$_->[2]	y2:$_->[3]\n");
+    }
+    
+    #-------------------------------------------------
+    my $cal1 = Tk::Image::Calculation->new(
+        -points	=> \@points_circle,
+        -form	=> "circle", # or "oval" or "polygon"
+    );
+    for my $subset ("points_inside", "points_outside")
+    {
+        print("\n$subset circle : \n");
+        for(@{$cal1->{$subset}})
+        {
+            print("x:$_->[0]	y:$_->[1]\n");
+        }
+    }
+    for my $subset ("lines_inside", "lines_outside")
+    {
+        print("\n$subset circle : \n");
+        for(@{$cal1->{$subset}})
+        {
+            print("x1:$_->[0]	y1:$_->[1]	x2:$_->[2]	y2:$_->[3]\n");
+        }
+    }
+    
+    #-------------------------------------------------
+    my $cal2 = Tk::Image::Calculation->new(
+        -points => \@points_polygon, # need three points at least
+        -form	=> "polygon", 
+        -subset	=> "lines_outside", # defaults to "all"
+    );
+    
+    use Tk;
+    my $mw = MainWindow->new();
+    my $canvas = $mw->Canvas(
+        -width	=> 800,
+        -height	=> 600,
+    )->pack();
+    
+    for(@{$cal2->{lines_outside}})
+    {
+        $canvas->createLine(@{$_});
+    }
+    MainLoop();
+    
+    #-------------------------------------------------
+    use Tk;
+    use Tk::JPEG;
+    my $mw = MainWindow->new();
+    my $image = $mw->Photo(-file => "test.jpg");
+    my $cal3 = Tk::Image::Calculation->new();
+    my $ref_points = $cal3->GetPointsOutCircle(50, 50, 150,  150);
+    $image->put("#FFFFFF", -to => $_->[0], $_->[1]) for(@{$ref_points});
+    $image->write("new.jpg", -from => 50, 50, 150, 150);
+    #-------------------------------------------------
 
 =head1 DESCRIPTION
 
