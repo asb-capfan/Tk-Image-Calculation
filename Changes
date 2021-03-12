@@ -5,7 +5,7 @@ Revision history for Perl extension Tk::Image::Calculation.
     - new graphic form added "polygon"
     
 0.03 Sat Feb 18 12:32:19 2006
-    - change the returnvalue of the functions GetPointsOval an GetPointsCircle
+    - change the return value of the functions GetPointsOval an GetPointsCircle
     - Constructor extended
     - add some tests
 
