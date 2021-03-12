@@ -1,8 +1,3 @@
-#*** Calculation.pm ***#
-# Copyright (C) 2006 by Torsten Knorr
-# create-soft@tiscali.de
-# All rights reserved!
-#-------------------------------------------------
  package Tk::Image::Calculation;
 #-------------------------------------------------
  use strict;
