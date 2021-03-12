@@ -964,113 +964,122 @@ Tk::Image::Calculation - Perl extension for graphic calculations
 
 =head1 DESCRIPTION
 
- This module calculates points and lines inside or outside from simple graphic objects.
- At this time possible objects:
+This module calculates points and lines inside or outside from simple graphic objects.
+At this time possible objects:
+
     "oval",
     "circle",
     "polygon"
 
 =head1 CONSTRUCTOR
 
-=over
+    my $object = Tk::Image::Calculation->new();
 
-=item my $object = Tk::Image::Calculation->new();
+Returns an empty object just for calling the methods.
 
- Returns an empty object just for calling the methods.
-
-=item my $object = Tk::Image::Calculation->new(
-    -points => [$x1, $y1, $x2, $y2],    # required
-    -form   => "oval",      # required
-    -subset => "points_outside, # optional
+    my $object = Tk::Image::Calculation->new(
+        -points => [$x1, $y1, $x2, $y2],    # required
+        -form   => "oval",      # required
+        -subset => "points_outside, # optional
     );
- -points    takes a arrayreference with points  required
- -form  takes one of the forms "oval", "circle" or "polygon" required
- -subset    takes one of the strings "points_outside", "points_inside", "lines_inside" or "lines_outside" 
+
+    -points    takes a arrayreference with points  required
+    -form  takes one of the forms "oval", "circle" or "polygon" required
+    -subset    takes one of the strings "points_outside", "points_inside", "lines_inside" or "lines_outside" 
+    
     optional defaults to "all"
 
- Returns a hashreference blessed as object with a key that was defined with the options -subset.
- The value of the key is an arrayreferences with points or lines.
- Points [x, y]
- Lines [x1, y1, x2, y2]
- Is the option -subset set to "all" the returned hash have the following keys.
+Returns a hashreference blessed as object with a key that was defined with the options -subset.
+The value of the key is an arrayreferences with points or lines.
+
+    Points [x, y]
+    Lines [x1, y1, x2, y2]
+
+Is the option -subset set to "all" the returned hash have the following keys.
+
     "points_outside",
     "points_inside",
     "lines_outside",
     "lines_inside"
 
-=back
-
 =head1 METHODS
 
- Two points are handed over to the functions for Oval or Circle. 
- In the following form ($x1, $y1, $x2, $y2).
- The first point to the left up and the second point to the right below of a thought rectangle,
- in that the graphic object does fitting.
- The returned values are array references of points or lines.
- Points [x, y]
- Lines [x1, y1, x2, y2]
+Two points are handed over to the functions for Oval or Circle. 
+In the following form ($x1, $y1, $x2, $y2).
+The first point to the left up and the second point to the right below of a thought rectangle,
+in that the graphic object does fitting.
+The returned values are array references of points or lines.
+
+    Points [x, y]
+    Lines [x1, y1, x2, y2]
 
 =over
 
 =item GetPointsOval
 
- Takes over two points as parameters.
- Returns a hashreferences with the following keys.
+Takes over two points as parameters.
+Returns a hashreferences with the following keys.
+
     "points_outside", 
     "points_inside",
     "lines_outside", 
     "lines_inside"
- The values of the keys are arrayreferences with points or lines. 
+
+The values of the keys are arrayreferences with points or lines. 
 
 =item GetPointsInOval, GetPointsOutOval, GetLinesInOval, GetLinesOutOval
 
- Takes over two points as parameters.
- Returns a array reference of Points or Lines inside or outside of the Oval. 
+Takes over two points as parameters.
+Returns a array reference of Points or Lines inside or outside of the Oval. 
 
 =item GetPointsCircle
 
- Just the same as GetPointsOval.
+Just the same as GetPointsOval.
 
 =item GetPointsInCircle, GetPointsOutCircle, GetLinesInCircle, GetLinesOutCircle
 
- Takes over two points as parameters.
- Returns a array reference of Points or Lines inside or outside of the Circle. 
+Takes over two points as parameters.
+Returns a array reference of Points or Lines inside or outside of the Circle. 
 
 =item GetPointsPolygon
 
- Takes over a list of points in the following way.
- my @polygon = (x1, y1, x2, y2, x3, y3, x4, y4, ... and so on)
- my $ref_hash = $object->GetPointsPolygon(@polygon);
- Need at least three points.
- Returns a hashreferences with the following keys.
+Takes over a list of points in the following way.
+
+    my @polygon = (x1, y1, x2, y2, x3, y3, x4, y4, ... and so on)
+    my $ref_hash = $object->GetPointsPolygon(@polygon);
+
+Need at least three points.
+Returns a hashreferences with the following keys.
+
     "points_outside", 
     "points_inside",
     "lines_outside", 
     "lines_inside"
- The values of the keys are arrayreferences with points or lines. 
+
+The values of the keys are arrayreferences with points or lines. 
 
 =item GetPointsInPolygon, GetPointsOutPolygon, GetLinesInPolygon, GetLinesOutPolygon
 
- Takes over a list with at least three points.
- Returns a array reference of Points or Lines inside or outside of the Circle.
+Takes over a list with at least three points.
+Returns a array reference of Points or Lines inside or outside of the Circle.
 
 =back
 
 =head2 EXPORT
 
- None by default.
+None by default.
 
 =head1 SEE ALSO
 
- Tk::Image::Cut
+L<Tk::Image::Cut>
 
 =head1 KEYWORDS
 
- graphic, calculation 
+graphic, calculation 
 
 =head1  BUGS
 
- Maybe you'll find some. Please let me know.
+Maybe you'll find some. Please let me know.
 
 =head1 AUTHOR
 
