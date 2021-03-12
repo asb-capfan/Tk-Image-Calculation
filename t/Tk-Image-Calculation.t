@@ -20,9 +20,9 @@ my @oval = (10, 10, 30, 50);
 my @circle = (20, 20, 60, 60);
 my @polygon = (136, 23, 231, 55, 463, 390, 338, 448, 182, 401, 148, 503, 15, 496, 9, 87);
 
-for my $form qw(oval circle polygon)
+for my $form ( qw(oval circle polygon) )
 {
-    for my $subset qw(points_outside points_inside)
+    for my $subset ( qw(points_outside points_inside) )
     {
         ok($cal1 = Tk::Image::Calculation->new(
             -form   => $form,
@@ -39,7 +39,7 @@ for my $form qw(oval circle polygon)
         ok(ComparePoints($cal1->{$subset}, $cal2->{$subset}));
         $t[$_]++ for(0..$#t);
     }
-    for my $subset qw(lines_outside lines_inside)
+    for my $subset ( qw(lines_outside lines_inside) )
     {
         ok($cal1 = Tk::Image::Calculation->new(
             -form   => $form,
