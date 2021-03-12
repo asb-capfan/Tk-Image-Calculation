@@ -868,6 +868,8 @@ Tk::Image::Calculation - Perl extension for graphic calculations
 
 =head1 CONSTRUCTOR
 
+=over
+
 =item my $object = Tk::Image::Calculation->new();
 
  Returns an empty object just for calling the methods.
@@ -892,6 +894,8 @@ Tk::Image::Calculation - Perl extension for graphic calculations
  	"lines_outside",
  	"lines_inside"
 
+=back
+
 =head1 METHODS
 
  Two points are handed over to the functions for Oval or Circle. 
@@ -901,6 +905,8 @@ Tk::Image::Calculation - Perl extension for graphic calculations
  The returned values are array references of points or lines.
  Points [x, y]
  Lines [x1, y1, x2, y2]
+
+=over
 
 =item GetPointsOval
 
@@ -943,6 +949,8 @@ Tk::Image::Calculation - Perl extension for graphic calculations
 
  Takes over a list with at least three points.
  Returns a array reference of Points or Lines inside or outside of the Circle.
+
+=back
 
 =head2 EXPORT
 
